@@ -7,26 +7,28 @@ public class CreateContactDialogue
     public void ShowCreateContactDialogue()
     {
         Console.Clear();
-        Console.WriteLine("---------  CREATE A NEW CONTACT:  ---------");
+        Console.WriteLine($"{"",-3} ---------  CREATE A NEW CONTACT:  ---------");
         Console.WriteLine();
 
-        Console.WriteLine("Enter first name:");
+        Console.Write($"{"",-6} Enter first name: ");
         contact.FirstName = Console.ReadLine()!;
 
-        Console.WriteLine("Enter last name:");
+        Console.Write($"{"",-6} Enter last name: ");
         contact.LastName = Console.ReadLine()!;
 
-        Console.WriteLine("Enter email address:");
+        Console.Write($"{"",-6} Enter email address: ");
         contact.Email = Console.ReadLine()!;
 
-        Console.WriteLine("Enter phone number:");
+        Console.Write($"{"",-6} Enter phone number: ");
         contact.PhoneNumber = Console.ReadLine()!;
 
-        Console.WriteLine("Enter address:");
+        Console.Write($"{"",-6} Enter address: ");
         contact.Address = Console.ReadLine()!;
 
-        Console.WriteLine("-------------------------------------------");
         Console.WriteLine();
+        Console.WriteLine($"{"",-3} -------------------------------------------");
+        Console.WriteLine();
+        Console.WriteLine($"{"",-6} Contact Created!");
 
     }
 
