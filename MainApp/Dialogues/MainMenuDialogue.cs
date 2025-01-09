@@ -1,42 +1,60 @@
-﻿namespace MainApp.Dialogues;
+﻿using MainApp.Services;
+
+namespace MainApp.Dialogues;
 
 public class MainMenuDialogue
 {
-    public void OpenMainMenu()
-    {
-        var isRunning = true;
-
-        do
+    static bool isRunning = true;
+    public void ShowMainMenu()
+    { 
+        while(isRunning)
         {
+            MainMenu();
+        }
+    }
+
+    private void MainMenu()
+    {
+        OutputDialogueService dialogue = new();
+
             Console.Clear();
-            Console.WriteLine("--------- CONTACTS LIST ---------");
             Console.WriteLine();
-            Console.WriteLine("1. Show all contacts");
-            Console.WriteLine("2. Add new contact");
-            Console.WriteLine("Q. Exit application");
+            Console.WriteLine("---------  CONTACTS LIST  ---------");
             Console.WriteLine();
-            Console.WriteLine("-------------------------------------");
-            Console.Write("Please select an option: ");
+            Console.WriteLine($"{"1.",-5} Show all contacts");
+            Console.WriteLine($"{"2.", -5} Create new contact");
+            Console.WriteLine($"{"Q.",-5} Exit application");
+            Console.WriteLine();
+            Console.WriteLine("-----------------------------------");
+
+            Console.WriteLine();
+            Console.Write("Select an option: ");
             string option = Console.ReadLine()!;
 
             switch (option.ToLower())
             {
                 case "1":
+                    dialogue.Show("Here are all your contacts");
 
-                break;
+                    break;
 
                 case "2":
+                    CreateContactDialogue createContact = new();
+                    createContact.ShowCreateContactDialogue();
 
-                break;
+                    break;
 
-                case "3":
-
-                break;
+                case "q":
+                    Console.Clear();
+                    dialogue.Show("You are now leaving the application. Goodbye!");
+                    isRunning = false;
+                    break;
 
                 default:
-                    
-                break;
+                    dialogue.Show("Please enter a valid option. Press any key to go back.");
+
+                    break;
             }
-        } while (isRunning);
+
     }
 }
