@@ -7,5 +7,5 @@ public class ContactModel
     public string Email { get; set; } = null!;
     public string PhoneNumber { get; set; } = null!;
     public string Address { get; set; } = null!;
-    public int ID { get; set; }
+    public string ID { get; set; }
 }
