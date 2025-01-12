@@ -29,6 +29,7 @@ public class CreateContactDialogue
         Console.WriteLine($"{"",-3} -------------------------------------------");
         Console.WriteLine();
         Console.WriteLine($"{"",-6} Contact Created!");
+        Console.ReadKey();
 
     }
 
