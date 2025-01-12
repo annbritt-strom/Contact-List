@@ -110,13 +110,15 @@ public class MainMenuDialogue(IContactService contactService)
     {
         Console.Clear();
         Console.WriteLine();
-        Console.WriteLine($"{"",-3} Here are all your contacts");
+        Console.WriteLine($"{"",-3} -------------------------  HERE ARE ALL YOUR CONTACTS:  -------------------------");
         Console.WriteLine();
         var contacts = _contactService.GetAll();
         foreach (var contact in contacts) 
         {
-            Console.WriteLine($"{"",-6} {contact.FirstName} {contact.LastName} <{contact.Email}> {contact.Address}");
+            Console.WriteLine($"{"",-5} * {contact.FirstName} {contact.LastName} <{contact.Email}> {contact.Address}");
         }
+        Console.WriteLine();
+        Console.WriteLine($"{"",-3} ---------------------------------------------------------------------------------");
         Console.ReadKey();
     }
 
@@ -124,26 +126,36 @@ public class MainMenuDialogue(IContactService contactService)
     {
         Console.Clear();
 
+
+        /* This code was generated with the help of Chat GPT */
+        string CheckInput(string prompt)
+        {
+            string input;
+            do
+            {
+                Console.Write($"{"",-5} {prompt}");
+                input = Console.ReadLine()!; //does the same thing as form.item = Console.ReadLine()
+                if (string.IsNullOrWhiteSpace(input))
+                {
+                    Console.WriteLine($"{"",-5} This field is required. Please enter a value.");
+                    Console.ReadKey();
+                }
+            } while (string.IsNullOrWhiteSpace(input)); // Do while loop makes it so as long as there is no input or if there is only white space in the feild, you cannot keep on going with creating the contact
+            return input; // returns what the user has typed in to the console, to be able to save the data
+        }
+        /* End of AI generated code */
+
         var form = ContactFactory.Create();
 
         Console.Clear();
         Console.WriteLine($"{"",-3} ---------  CREATE A NEW CONTACT:  ---------");
         Console.WriteLine();
 
-        Console.Write($"{"",-6} Enter first name: ");
-        form.FirstName = Console.ReadLine()!;
-
-        Console.Write($"{"",-6} Enter last name: ");
-        form.LastName = Console.ReadLine()!;
-
-        Console.Write($"{"",-6} Enter email address: ");
-        form.Email = Console.ReadLine()!;
-
-        Console.Write($"{"",-6} Enter phone number: ");
-        form.PhoneNumber = Console.ReadLine()!;
-
-        Console.Write($"{"",-6} Enter address: ");
-        form.Address = Console.ReadLine()!;
+        form.FirstName = CheckInput("Enter first name: ");
+        form.LastName = CheckInput("Enter last name: ");
+        form.Email = CheckInput("Enter e-mail: ");
+        form.PhoneNumber = CheckInput("Enter phone number: ");
+        form.Address = CheckInput("Enter address: ");
 
         Console.WriteLine();
         Console.WriteLine($"{"",-3} -------------------------------------------");
