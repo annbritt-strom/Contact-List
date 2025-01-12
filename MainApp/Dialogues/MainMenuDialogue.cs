@@ -1,7 +1,13 @@
-﻿namespace MainApp.Dialogues;
+﻿using Business.Factories;
+using Business.Interfaces;
+using Business.Services;
 
-public class MainMenuDialogue
+namespace MainApp.Dialogues;
+
+public class MainMenuDialogue(IContactService contactService)
 {
+    private readonly IContactService _contactService = contactService;
+
     static bool isRunning = true;
     public void ShowMainMenu()
     { 
@@ -103,15 +109,53 @@ public class MainMenuDialogue
     private void ShowAllContactsOption()
     {
         Console.Clear();
+        Console.WriteLine();
         Console.WriteLine($"{"",-3} Here are all your contacts");
+        Console.WriteLine();
+        var contacts = _contactService.GetAll();
+        foreach (var contact in contacts) 
+        {
+            Console.WriteLine($"{"",-6} {contact.FirstName} {contact.LastName} <{contact.Email}> {contact.Address}");
+        }
         Console.ReadKey();
     }
 
     private void CreateNewContactOption()
     {
         Console.Clear();
-        CreateContactDialogue createContact = new();
-        createContact.ShowCreateContactDialogue();
+
+        var form = ContactFactory.Create();
+
+        Console.Clear();
+        Console.WriteLine($"{"",-3} ---------  CREATE A NEW CONTACT:  ---------");
+        Console.WriteLine();
+
+        Console.Write($"{"",-6} Enter first name: ");
+        form.FirstName = Console.ReadLine()!;
+
+        Console.Write($"{"",-6} Enter last name: ");
+        form.LastName = Console.ReadLine()!;
+
+        Console.Write($"{"",-6} Enter email address: ");
+        form.Email = Console.ReadLine()!;
+
+        Console.Write($"{"",-6} Enter phone number: ");
+        form.PhoneNumber = Console.ReadLine()!;
+
+        Console.Write($"{"",-6} Enter address: ");
+        form.Address = Console.ReadLine()!;
+
+        Console.WriteLine();
+        Console.WriteLine($"{"",-3} -------------------------------------------");
+        Console.WriteLine();
+
+        var result = _contactService.SaveContact(form);
+
+        if (result)
+            Console.Write($"{"",-6} Contact was created!");
+        else
+            Console.Write($"{"",-6} Contact was not created.");
+
         Console.ReadKey();
     }
 

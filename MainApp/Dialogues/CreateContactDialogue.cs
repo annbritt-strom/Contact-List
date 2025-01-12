@@ -1,36 +1,44 @@
-﻿using Business.Models;
+﻿using Business.Factories;
+using Business.Interfaces;
+using Business.Services;
 namespace MainApp.Dialogues;
 
-public class CreateContactDialogue
+public class CreateContactDialogue(IContactService contactService)
 {
-    ContactModel contact = new ContactModel()!;
+    private readonly IContactService _contactService = contactService;
     public void ShowCreateContactDialogue()
     {
+        var form = ContactFactory.Create();
+
         Console.Clear();
         Console.WriteLine($"{"",-3} ---------  CREATE A NEW CONTACT:  ---------");
         Console.WriteLine();
 
         Console.Write($"{"",-6} Enter first name: ");
-        contact.FirstName = Console.ReadLine()!;
+        form.FirstName = Console.ReadLine()!;
 
         Console.Write($"{"",-6} Enter last name: ");
-        contact.LastName = Console.ReadLine()!;
+        form.LastName = Console.ReadLine()!;
 
         Console.Write($"{"",-6} Enter email address: ");
-        contact.Email = Console.ReadLine()!;
+        form.Email = Console.ReadLine()!;
 
         Console.Write($"{"",-6} Enter phone number: ");
-        contact.PhoneNumber = Console.ReadLine()!;
+        form.PhoneNumber = Console.ReadLine()!;
 
         Console.Write($"{"",-6} Enter address: ");
-        contact.Address = Console.ReadLine()!;
+        form.Address = Console.ReadLine()!;
 
         Console.WriteLine();
         Console.WriteLine($"{"",-3} -------------------------------------------");
         Console.WriteLine();
-        Console.WriteLine($"{"",-6} Contact Created!");
-        Console.ReadKey();
 
+        var result = _contactService.SaveContact(form);
+
+        if (result)
+            Console.Write($"{"",-6} Contact was created!");
+        else
+            Console.Write($"{"",-6} Contact was not created.");
     }
 
 }
